@@ -2,5 +2,7 @@ type = module
 name = TinyMCE Code Highlight
 description = Tweaks for the TinyMCE codesample plugin, adds syntax highlighting on content display.
 backdrop = 1.x
+configure = admin/config/content/tinymce-codehighlight
+maintainers[indigoxela] = indigoxela
 
 dependencies[] = tinymce
