@@ -1,0 +1,163 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_library_info().
+ */
+function tinymce_codehighlight_library_info() {
+  $module_path = backdrop_get_path('module', 'tinymce_codehighlight');
+  $path = $module_path . '/libraries/prismjs';
+  $js_options = array(
+    'type' => 'file',
+    'weight' => -1,
+    'preprocess' => FALSE,// Aggregation breaks autoloader. @todo would Prism.plugins.autoloader.languages_path = 'xxx' work?
+  );
+  $libraries['Prism.js_local'] = array(
+    'title' => 'Prism.js (local)',
+    'website' => 'https://prismjs.com/',
+    'version' => '1.29.0',
+    'js' => array(
+      $path . '/components/prism-core.min.js' => $js_options,
+      $path . '/plugins/autoloader/prism-autoloader.min.js' => $js_options,
+    ),
+    'css' => array(
+      $module_path . '/css/tinymce-codehighlight-common.css' => array(),
+    ),
+  );
+
+  if (config_get('tinymce_codehighlight.settings', 'copybutton')) {
+    $libraries['Prism.js_local']['js'][$path . '/plugins/toolbar/prism-toolbar.min.js'] = $js_options;
+    $libraries['Prism.js_local']['js'][$path . '/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js'] = $js_options;
+  }
+
+  $theme = _tinymce_codehighlight_get_active_theme();
+  $stylesheet = $theme['stylesheet_path'];
+  $libraries['Prism.js_local']['css'][$stylesheet] = array('type' => 'file');
+
+  return $libraries;
+}
+
+/**
+ * Callback the active theme.
+ */
+function _tinymce_codehighlight_get_active_theme() {
+  $themes = _tinymce_codehighlight_get_all_themes();
+  $active_theme = config_get('tinymce_codehighlight.settings', 'theme');
+
+  if ($active_theme && array_key_exists($active_theme, $themes)) {
+    return $themes[$active_theme];
+  }
+  // Fallback if not found.
+  return $themes['default'];
+}
+
+/**
+ * Callback to collect theme info.
+ */
+function _tinymce_codehighlight_get_all_themes() {
+  $themes = &backdrop_static(__FUNCTION__, NULL);
+
+  if (!isset($themes)) {
+    $themes = module_invoke_all('tinymce_codehighlight_theme_info');
+  }
+  return $themes;
+}
+
+/**
+ * Implements hook_tinymce_codehighlight_theme_info().
+ */
+function tinymce_codehighlight_tinymce_codehighlight_theme_info() {
+  // Some custom default themes, as none of the Prism.js themes is fully
+  // compatible with Backdrop, they usually conflict with theme's styles, and
+  // don't play nicely with the markup inside CKEditor5 (half styled is worse
+  // than not styled at all).
+  $path = backdrop_get_path('module', 'tinymce_codehighlight');
+  $themes = array();
+  $themes['default'] = array(
+    'name' => 'default',
+    'label' => t('Default'),
+    'stylesheet_path' => $path . '/themes/default/styles.css',
+    'screenshot_path' => $path . '/themes/default/screenshot-default.png',
+  );
+  $themes['dark'] = array(
+    'name' => 'dark',
+    'label' => t('Dark'),
+    'stylesheet_path' => $path . '/themes/dark/styles.css',
+    'screenshot_path' => $path . '/themes/dark/screenshot-dark.png',
+  );
+  $themes['striped'] = array(
+    'name' => 'striped',
+    'label' => t('Striped'),
+    'stylesheet_path' => $path . '/themes/striped/styles.css',
+    'screenshot_path' => $path . '/themes/striped/screenshot-striped.png',
+  );
+
+  return $themes;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function tinymce_codehighlight_menu() {
+  $items['admin/config/content/tinymce-codehighlight'] = array(
+    'title' => 'TinyMCE Code Highlight',
+    'page callback' => 'backdrop_get_form',
+    'page arguments' => array('tinymce_codehighlight_settings_form'),
+    'access arguments' => array('administer filters'),
+    'file' => 'tinymce_codehighlight.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function tinymce_codehighlight_preprocess_page(&$variables) {
+  if (!backdrop_is_html()) {
+    return;
+  }
+  backdrop_add_library('tinymce_codehighlight', 'Prism.js_local');
+
+  if (config_get('tinymce_codehighlight.settings', 'copybutton')) {
+    backdrop_add_icons(array(
+      'copy',
+      'check'
+    ));
+  }
+}
+
+/**
+ * Implements hook_tinymce_options_alter().
+ */
+function tinymce_codehighlight_tinymce_options_alter(array &$options, $format) {
+  $options['tiny_options']['codesample_global_prismjs'] = TRUE;
+
+  $theme = _tinymce_codehighlight_get_active_theme();
+  $stylesheet = $theme['stylesheet_path'];
+
+  $options['tiny_options']['content_css'][] = base_path() . backdrop_get_path('module', 'tinymce_codehighlight') . '/css/tinymce-codehighlight-common.css';
+  $options['tiny_options']['content_css'][] = base_path() . $stylesheet;
+
+  $enabled = config_get('tinymce_codehighlight.settings', 'enabled_with_labels');
+  $tiny_options = array();
+  foreach ($enabled as $name => $label) {
+    $tiny_options[] = array(
+      'text' => $label,
+      'value' => $name,
+    );
+  }
+  $options['tiny_options']['codesample_languages'] = $tiny_options;
+}
+
+/**
+ * Implements hook_config_info().
+ */
+function tinymce_codehighlight_config_info() {
+  $prefixes['tinymce_codehighlight.settings'] = array(
+    'label' => t('TinyMCE Code Highlight settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
+}

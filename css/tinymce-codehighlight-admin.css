@@ -1,0 +1,25 @@
+/* Admin form styles */
+.form-item-theme .form-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+.form-item-theme img {
+  vertical-align: bottom;
+}
+.form-item-theme div.form-type-radio div.description {
+  margin: 8px 0 0;
+  max-width: 280px;
+}
+.form-item-theme input:checked + label + div {
+  outline: 3px solid #cae667;
+}
+.form-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+  gap: .5em 2em;
+  margin: 1.5em 0 0;
+}
+.form-checkboxes .form-item {
+  margin: 0;
+}
