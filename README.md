@@ -17,6 +17,8 @@ This module enhances these capabilities.
 
 - Install this module using the official [Backdrop CMS instructions](https://docs.backdropcms.org/documentation/extend-with-modules)
 - Go to admin/config/content/tinymce-codehighlight and tweak as needed
+- If not already done, edit your custom editor profile to add the codesample
+  button `{;}` (on admin/config/content/tinymce-builder)
 
 ## Dependencies
 
