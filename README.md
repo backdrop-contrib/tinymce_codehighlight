@@ -5,11 +5,11 @@ This module enhances these capabilities.
 
 - Adds an admin form to configure theme, copy button and languages available
   in the editor dropdown
-- Adds support for all programming languages supported by Prism.js (not only
+- Adds support for all 297 programming languages supported by Prism.js (not only
   a subset)
-- Adds 3 themes compatible with both, the editor and Backdrop themes
-- Adds the API to quickly add your own custom theme
 - Uses Prism.js also when *displaying content* (not only inside the editor)
+- Adds three themes that play nicely with both, the editor and Backdrop CMS
+- Adds the API to quickly add your own custom theme with little effort
 
 ![admin interface](https://raw.githubusercontent.com/backdrop-contrib/tinymce_codehighlight/1.x-1.x/screenshots/tinymce-codehighlight-admin.png)
 
