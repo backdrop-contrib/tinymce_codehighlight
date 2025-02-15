@@ -9,10 +9,11 @@
 function tinymce_codehighlight_library_info() {
   $module_path = backdrop_get_path('module', 'tinymce_codehighlight');
   $path = $module_path . '/libraries/prismjs';
+  // @todo would Prism.plugins.autoloader.languages_path = 'xxx' work?
   $js_options = array(
     'type' => 'file',
     'weight' => -1,
-    'preprocess' => FALSE,// Aggregation breaks autoloader. @todo would Prism.plugins.autoloader.languages_path = 'xxx' work?
+    'preprocess' => FALSE,// Aggregation breaks autoloader.
   );
   $libraries['Prism.js_local'] = array(
     'title' => 'Prism.js (local)',
@@ -123,7 +124,7 @@ function tinymce_codehighlight_preprocess_page(&$variables) {
   if (config_get('tinymce_codehighlight.settings', 'copybutton')) {
     backdrop_add_icons(array(
       'copy',
-      'check'
+      'check',
     ));
   }
 }
