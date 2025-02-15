@@ -11,6 +11,8 @@ This module enhances these capabilities.
 - Adds the API to quickly add your own custom theme
 - Uses Prism.js also when *displaying content* (not only inside the editor)
 
+![admin interface](https://raw.githubusercontent.com/backdrop-contrib/tinymce_codehighlight/1.x-1.x/screenshots/tinymce-codehighlight-admin.png)
+
 ## Installation
 
 - Install this module using the official [Backdrop CMS instructions](https://docs.backdropcms.org/documentation/extend-with-modules)
