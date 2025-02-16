@@ -1,6 +1,7 @@
 <?php
 /**
  * @file
+ * Callbacks and hook implementations for the TinyMCE Code Highlight module.
  */
 
 /**
@@ -47,7 +48,9 @@ function tinymce_codehighlight_library_info() {
 }
 
 /**
- * Callback the active theme.
+ * Callback to get the active theme.
+ *
+ * @return array
  */
 function _tinymce_codehighlight_get_active_theme() {
   $themes = _tinymce_codehighlight_get_all_themes();
@@ -62,6 +65,8 @@ function _tinymce_codehighlight_get_active_theme() {
 
 /**
  * Callback to collect theme info.
+ *
+ * @return array
  */
 function _tinymce_codehighlight_get_all_themes() {
   $themes = &backdrop_static(__FUNCTION__, NULL);
