@@ -9,11 +9,9 @@
 function tinymce_codehighlight_library_info() {
   $module_path = backdrop_get_path('module', 'tinymce_codehighlight');
   $path = $module_path . '/libraries/prismjs';
-  // @todo would Prism.plugins.autoloader.languages_path = 'xxx' work?
   $js_options = array(
     'type' => 'file',
-    'weight' => -1,
-    'preprocess' => FALSE,// Aggregation breaks autoloader.
+    'weight' => -1,// Make sure this loads before TinyMCE.
   );
   $libraries['Prism.js_local'] = array(
     'title' => 'Prism.js (local)',
@@ -22,12 +20,20 @@ function tinymce_codehighlight_library_info() {
     'js' => array(
       $path . '/components/prism-core.min.js' => $js_options,
       $path . '/plugins/autoloader/prism-autoloader.min.js' => $js_options,
+      $module_path . '/js/tinymce-codehighlight.js' => $js_options,
     ),
     'css' => array(
       $module_path . '/css/tinymce-codehighlight-common.css' => array(),
     ),
   );
+  // @see js/tinymce-codehighlight.js
+  $languages_path = base_path() . $module_path . '/libraries/prismjs/components/';
+  $libraries['Prism.js_local']['js'][] = array(
+    'type' => 'setting',
+    'data' => array('prismjsAutoloaderLangPath' => $languages_path),
+  );
 
+  // Optional copy to clipboard button.
   if (config_get('tinymce_codehighlight.settings', 'copybutton')) {
     $libraries['Prism.js_local']['js'][$path . '/plugins/toolbar/prism-toolbar.min.js'] = $js_options;
     $libraries['Prism.js_local']['js'][$path . '/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js'] = $js_options;
