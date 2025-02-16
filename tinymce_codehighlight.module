@@ -90,19 +90,19 @@ function tinymce_codehighlight_tinymce_codehighlight_theme_info() {
   $themes['default'] = array(
     'name' => 'default',
     'label' => t('Default'),
-    'stylesheet_path' => $path . '/themes/default/styles.css',
+    'stylesheet_path' => $path . '/themes/default/prismjs-styles.css',
     'screenshot_path' => $path . '/themes/default/screenshot-default.png',
   );
   $themes['dark'] = array(
     'name' => 'dark',
     'label' => t('Dark'),
-    'stylesheet_path' => $path . '/themes/dark/styles.css',
+    'stylesheet_path' => $path . '/themes/dark/prismjs-styles.css',
     'screenshot_path' => $path . '/themes/dark/screenshot-dark.png',
   );
   $themes['striped'] = array(
     'name' => 'striped',
     'label' => t('Striped'),
-    'stylesheet_path' => $path . '/themes/striped/styles.css',
+    'stylesheet_path' => $path . '/themes/striped/prismjs-styles.css',
     'screenshot_path' => $path . '/themes/striped/screenshot-striped.png',
   );
 
