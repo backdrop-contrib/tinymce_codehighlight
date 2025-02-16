@@ -1,6 +1,7 @@
 # TinyMCE Code Highlight
 
-TinyMCE's codesample plugin `{;}` already uses Prism.js, but in a limited way.
+TinyMCE's codesample plugin `{;}` already uses Prism.js to add syntax
+highlighting to its code snippets, but in a limited way.
 This module enhances these capabilities.
 
 - Adds an admin form to configure theme, copy button and languages available
@@ -9,7 +10,7 @@ This module enhances these capabilities.
   a subset)
 - Uses Prism.js also when *displaying content* (not only inside the editor)
 - Adds three themes that play nicely with both, the editor and Backdrop CMS
-- Adds the API to quickly add your own custom theme with little effort
+- Provides the API to quickly add your own custom theme with little effort
 
 ![admin interface](https://raw.githubusercontent.com/backdrop-contrib/tinymce_codehighlight/1.x-1.x/screenshots/tinymce-codehighlight-admin.png)
 
@@ -25,7 +26,7 @@ This module enhances these capabilities.
 - TinyMCE
 
 Note that code highlighting will work for any compatible markup, also if
-created with CKEditor5.
+created with CKEditor5 or manually.
 
 ## Issues
 
@@ -37,9 +38,9 @@ Bugs and feature requests should be reported in the [Issue Queue](https://github
 
 ## Credits
 
-Bundles [Prism.js](https://prismjs.com/), a simple, lightweight JavaScript
-library to highlight a variety of programming languages. Prism.js is
-licensed under MIT.
+Bundles [Prism.js](https://prismjs.com/), an easy to use, lightweight
+JavaScript library to add syntax highlighting for a variety of programming
+languages. Prism.js is licensed under MIT and maintained on GitHub.
 
 ## License
 
