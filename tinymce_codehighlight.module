@@ -17,7 +17,7 @@ function tinymce_codehighlight_library_info() {
   $libraries['Prism.js_local'] = array(
     'title' => 'Prism.js (local)',
     'website' => 'https://prismjs.com/',
-    'version' => '1.29.0',
+    'version' => '1.30.0',
     'js' => array(
       $path . '/components/prism-core.min.js' => $js_options,
       $path . '/plugins/autoloader/prism-autoloader.min.js' => $js_options,
